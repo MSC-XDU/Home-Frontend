@@ -1,6 +1,6 @@
-# msc_fuli
+# MSC首页前端
 
-> msc_fuli
+> MSC
 
 ## Build Setup
 
