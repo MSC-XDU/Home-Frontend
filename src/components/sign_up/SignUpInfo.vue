@@ -159,7 +159,7 @@
           var self = this
           self.$dispatch('loading')
           self
-            .$http.post('http://localhost:8081/join/set-sign-up-info', self.model)
+            .$http.post('https://mscinxdu.leanapp.cn/join/set-sign-up-info', self.model)
             .then(function (resp) {
               if (resp.status >= 200 && resp.status < 300) {
                 var result = resp.json()
@@ -198,7 +198,7 @@
         var form = new FormData()
         form.set('file', input.files[0])
         var xhrWrap = {xhr: null}
-        var req = this.$http.post('http://localhost:8081/join/file', form, {
+        var req = this.$http.post('https://mscinxdu.leanapp.cn/join/file', form, {
           before (req) {
             xhrWrap.xhr = req
           }
@@ -209,7 +209,7 @@
         var self = this
         self.error = false
         self.loading = true
-        this.$http.get('http://localhost:8081/join/sign-up-info')
+        this.$http.get('https://mscinxdu.leanapp.cn/join/sign-up-info')
           .then(function (resp) {
             if (resp.status >= 200 && resp.status < 300) {
               var result = resp.json()

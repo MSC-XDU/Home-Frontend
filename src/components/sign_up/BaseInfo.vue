@@ -132,7 +132,7 @@
           this.$dispatch('loading')
           var self = this
           this
-            .$http.post('http://localhost:8081/join/set-base-info', this.model)
+            .$http.post('https://mscinxdu.leanapp.cn/join/set-base-info', this.model)
             .then(function (resp) {
               if (resp.status >= 200 && resp.status < 300) {
                 var result = resp.json()
@@ -173,7 +173,7 @@
         var self = this
         self.loading = true
         self.error = false
-        this.$http.get('http://localhost:8081/join/base-info')
+        this.$http.get('https://mscinxdu.leanapp.cn/join/base-info')
           .then(function (resp) {
             if (resp.status >= 200 && resp.status < 300) {
               var result = resp.json()
