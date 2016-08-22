@@ -118,7 +118,7 @@
           this.$dispatch('loading')
           var self = this
           this
-            .$http.post('http://localhost:8081/join/set-base-info', {data: this.model, token: this.token})
+            .$http.post('https://mscinxdu.leanapp.cn/join/set-base-info', {data: this.model, token: this.token})
             .then(function (resp) {
               if (resp.status >= 200 && resp.status < 300) {
                 var result = resp.json()
@@ -164,7 +164,7 @@
           loading: true,
           error: false
         })
-        this.$http.post('http://localhost:8081/join/base-info', {token: this.token})
+        this.$http.post('https://mscinxdu.leanapp.cn/join/base-info', {token: this.token})
           .then(function (resp) {
             if (resp.status >= 200 && resp.status < 300) {
               var result = resp.json()

@@ -114,7 +114,7 @@
           var self = this
           self.$dispatch('loading')
           this
-            .$http.post('http://localhost:8081/join/user-exist', {email: self.email})
+            .$http.post('https://mscinxdu.leanapp.cn/join/user-exist', {email: self.email})
             .then(function (resp) {
               if (resp.status >= 200 && resp.status < 300) {
                 var result = resp.json()
@@ -147,7 +147,7 @@
           var self = this
           self.$dispatch('loading')
           this
-            .$http.post('http://localhost:8081/join/sign-up', {username: self.email, password: self.signUpPassword})
+            .$http.post('https://mscinxdu.leanapp.cn/join/sign-up', {username: self.email, password: self.signUpPassword})
             .then(this.nextHandler(self, {next: 'base-info', color: 'yellow'}), this.errorHandler(self))
         }
       },
@@ -156,7 +156,7 @@
           var self = this
           self.$dispatch('loading')
           this
-            .$http.post('http://localhost:8081/join/login', {email: self.email, password: self.logInPassword})
+            .$http.post('https://mscinxdu.leanapp.cn/join/login', {email: self.email, password: self.logInPassword})
             .then(this.nextHandler(self, {next: 'base-info', color: 'yellow', logedIn: true}), this.errorHandler(self))
         }
       }

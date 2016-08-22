@@ -79,7 +79,7 @@
         } else {
           var self = this
           self.$http
-            .post('http://localhost:8081/join/delete-file', {id: this.id, token: this.token})
+            .post('https://mscinxdu.leanapp.cn/join/delete-file', {id: this.id, token: this.token})
             .then(function (resp) {
               if (resp.status >= 200 && resp.status < 300) {
                 var result = resp.json()
