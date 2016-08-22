@@ -13,10 +13,14 @@
           <i class="fa fa-2x fa-renren"></i>
         </a>
         <a style="color: rgba(238, 154, 47, 1.0)"
-           href="http://weixin.sogou.com/weixin?type=1&query=%E8%A5%BF%E7%94%B5MSTC"
+           @mouseover="showQR"
+           @mouseout="hiddenQR"
+           @click="showQR"
+           href="javascript:void(0)"
            target="_blank">
           <i class="fa fa-2x fa-weixin"></i>
         </a>
+        <img id="qr" v-show="show" src="https://oc7r9dv0c.qnssl.com/image/main/qr.jpeg">
         <a style="color: rgba(216, 26, 26, 1.0)" href="http://weibo.com/mstcinxdu"
            target="_blank">
           <i class="fa fa-2x fa-weibo"></i>
@@ -51,6 +55,17 @@
     align-items: center;
 
     background-color: rgba(0, 0, 0, 1);
+  }
+
+  #qr {
+    width: 150px;
+    height: 150px;
+
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    margin: auto;
   }
 
   .contact {
@@ -155,8 +170,18 @@
 <script>
   export default{
     data () {
-      return {}
+      return {
+        show: false
+      }
     },
-    components: {}
+    components: {},
+    methods: {
+      showQR: function () {
+        this.show = true
+      },
+      hiddenQR: function () {
+        this.show = false
+      }
+    }
   }
 </script>
