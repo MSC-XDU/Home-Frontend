@@ -1,9 +1,6 @@
 <template>
   <div>
-    <splash
-      title="西电 MSC"
-      subtitle="Micro Makes Great!">
-    </splash>
+    <splash></splash>
     <div class="content-wrap">
       <div class="content">
         <h2 class="content-head">
@@ -53,14 +50,14 @@
         <div class="pure-g">
           <div id="join-btn" class="pure-u-1-1">
             <h2 class="join-title">
-              <span style="color: rgba(50, 96, 187, 1.0)">M</span>
-              <span style="color: rgba(244, 157, 47, 1.0)">S</span>
-              <span style="color: rgba(178, 19, 16, 1.0)">C</span>
+              <span class="msc" style="color: rgba(50, 96, 187, 1.0)">M</span>
+              <span class="msc" style="color: rgba(244, 157, 47, 1.0)">S</span>
+              <span class="msc" style="color: rgba(178, 19, 16, 1.0)">C</span>
             </h2>
             <a class="pure-button pure-button-primary" v-link="'/join'">JOIN US</a>
-            <h5>
+            <h4>
               我愿意等   希望你来
-            </h5>
+            </h4>
           </div>
         </div>
       </div>
@@ -198,13 +195,13 @@
           title: '热爱技术',
           content: '技术部有很多热爱技术的人,我们喜欢新的idea,喜欢面对挑战,喜欢亲手实现自己的想法。我们关注很多方向,各有所长。总之如果你热爱技术,那么欢迎加入技术部。'
         }, {
-          icon: '',
-          title: '还差一个',
-          content: '求告知我'
+          icon: 'fa-star-o',
+          title: '热爱活动',
+          content: '活动部需要策划型人才，活动、出游都需要我们的组织，只要你思维全面、热心交际或者控场能力超群、办事能力出众，那么活动部就是你大展才华的舞台。来吧，我们期待不平凡的你。'
         }, {
-          icon: '',
-          title: '最后还差一个',
-          content: '还差这一个呢。。。。'
+          icon: 'fa-instagram',
+          title: '热爱艺术',
+          content: '俱乐部的活动海报和宣传视频都由我们出品，传媒需要你熟练的技术，需要你新颖的设计思路，如果你掌握PS/AI，或你知晓AE/PR，又或你是一名手绘大触，我们期待你来。'
         }]
       }
     },

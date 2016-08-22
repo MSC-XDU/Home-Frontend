@@ -13,6 +13,7 @@
            v-show="showPassword">
         <fieldset v-show="showLogIn">
           <input v-model="logInPassword" type="password" placeholder="密码">
+          <a style="margin-top: 15px" class="pure-button" href="https://xdmsc_recruit.leanapp.cn/lost?redirect=https://xdmsc.club/join">忘记密码</a>
         </fieldset>
         <fieldset v-show="showSignUp">
           <input v-model="signUpPassword" type="password" placeholder="密码">
@@ -78,7 +79,6 @@
       },
       errorHandler: function (self) {
         return function (e) {
-          console.log('fuck')
           self.tip = 'Sorry,网络错误,再试试好不好?'
           self.$dispatch('done')
         }
@@ -88,6 +88,7 @@
           if (resp.status >= 200 && resp.status < 300) {
             var result = resp.json()
             if (result['success?']) {
+              next.token = result.token
               self.$dispatch('next', next)
             } else {
               self.tip = result['error']
@@ -113,7 +114,7 @@
           var self = this
           self.$dispatch('loading')
           this
-            .$http.post('https://mscinxdu.leanapp.cn/join/user-exist', {email: self.email})
+            .$http.post('http://localhost:8081/join/user-exist', {email: self.email})
             .then(function (resp) {
               if (resp.status >= 200 && resp.status < 300) {
                 var result = resp.json()
@@ -146,7 +147,7 @@
           var self = this
           self.$dispatch('loading')
           this
-            .$http.post('https://mscinxdu.leanapp.cn/join/sign-up', {username: self.email, password: self.signUpPassword})
+            .$http.post('http://localhost:8081/join/sign-up', {username: self.email, password: self.signUpPassword})
             .then(this.nextHandler(self, {next: 'base-info', color: 'yellow'}), this.errorHandler(self))
         }
       },
@@ -155,7 +156,7 @@
           var self = this
           self.$dispatch('loading')
           this
-            .$http.post('https://mscinxdu.leanapp.cn/join/login', {email: self.email, password: self.logInPassword})
+            .$http.post('http://localhost:8081/join/login', {email: self.email, password: self.logInPassword})
             .then(this.nextHandler(self, {next: 'base-info', color: 'yellow', logedIn: true}), this.errorHandler(self))
         }
       }

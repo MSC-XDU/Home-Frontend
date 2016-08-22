@@ -126,7 +126,7 @@
           code += codeInput.value
         })
         this.$http
-          .post('https://mscinxdu.leanapp.cn/join/verify-phone', {code: code})
+          .post('http://localhost:8081/join/verify-phone', {code: code})
           .then(function (resp) {
             if (resp.status >= 200 && resp.status < 300) {
               var result = resp.json()
@@ -172,7 +172,7 @@
         var self = this
         self.codeTip = '请求中...'
         self.$http
-          .post('https://mscinxdu.leanapp.cn/join/request-verify', {phone: self.phone})
+          .post('http://localhost:8081/join/request-verify', {phone: self.phone})
           .then(function (resp) {
             if (resp.status >= 200 && resp.status < 300) {
               var result = resp.json()

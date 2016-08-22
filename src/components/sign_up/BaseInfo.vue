@@ -1,9 +1,5 @@
 <template>
   <div class="base-info">
-    <div v-if="loading" class="mask column-center">
-      <i v-show="!error" class="fa fa-circle-o-notch fa-2x fa-spin" aria-hidden="true"></i>
-      <button class="pure-button" v-show="error"></button>
-    </div>
     <form v-form name="baseInfo" class="pure-form">
       <fieldset>
         <legend class="title"><h2>{{tip}}</h2></legend>
@@ -50,15 +46,6 @@
   </div>
 </template>
 <style scoped>
-  .mask {
-    position: fixed;
-    top: 48px;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background: rgba(240, 240, 240, 0.6);
-  }
-
   .base-info {
     margin-top: 28px;
     width: 100%;
@@ -99,7 +86,7 @@
       if (!this.logedIn) return
       this.getInfo()
     },
-    props: ['logedIn'],
+    props: ['logedIn', 'token'],
     data () {
       return {
         model: {
@@ -109,13 +96,12 @@
           major: '',
           qq: '',
           birthday: '',
-          home: ''
+          home: '',
+          phone: ''
         },
         baseInfo: null,
         tip: '我们想更了解你一点',
-        phoneVerified: false,
-        loading: false,
-        error: false
+        phoneVerified: false
       }
     },
     computed: {
@@ -132,7 +118,7 @@
           this.$dispatch('loading')
           var self = this
           this
-            .$http.post('https://mscinxdu.leanapp.cn/join/set-base-info', this.model)
+            .$http.post('http://localhost:8081/join/set-base-info', {data: this.model, token: this.token})
             .then(function (resp) {
               if (resp.status >= 200 && resp.status < 300) {
                 var result = resp.json()
@@ -162,6 +148,9 @@
               self.errorHandler(self)
             })
         }
+      },
+      'get-info': function () {
+        this.getInfo()
       }
     },
     methods: {
@@ -171,9 +160,11 @@
       },
       getInfo: function () {
         var self = this
-        self.loading = true
-        self.error = false
-        this.$http.get('https://mscinxdu.leanapp.cn/join/base-info')
+        self.$dispatch('info-status', {
+          loading: true,
+          error: false
+        })
+        this.$http.post('http://localhost:8081/join/base-info', {token: this.token})
           .then(function (resp) {
             if (resp.status >= 200 && resp.status < 300) {
               var result = resp.json()
@@ -184,15 +175,27 @@
                 result.phone = result['mobilePhoneNumber']
                 delete result['mobilePhoneNumber']
                 self.model = result
-                self.loading = false
+                self.$dispatch('info-status', {
+                  loading: false,
+                  error: false
+                })
               } else {
-                self.error = true
+                self.$dispatch('info-status', {
+                  loading: true,
+                  error: true
+                })
               }
             } else {
-              self.error = true
+              self.$dispatch('info-status', {
+                loading: true,
+                error: true
+              })
             }
           }, function () {
-            self.error = true
+            self.$dispatch('info-status', {
+              loading: true,
+              error: true
+            })
           })
       }
     }

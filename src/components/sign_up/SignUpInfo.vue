@@ -1,9 +1,5 @@
 <template>
   <div class="sign-up-info">
-    <div v-if="loading" class="mask column-center">
-      <i v-show="!error" class="fa fa-circle-o-notch fa-2x fa-spin" aria-hidden="true"></i>
-      <button class="pure-button" v-show="error"></button>
-    </div>
     <form v-form name="signUpInfo" class="pure-form pure-form-stacked" novalidate>
       <fieldset>
         <legend>
@@ -35,7 +31,7 @@
       <fieldset>
         <div class="files-area">
           <ul>
-            <file v-for="file in files" :file="file"></file>
+            <file :token="token" v-for="file in files" :file="file"></file>
           </ul>
         </div>
         <label>如果你有作品展示欢迎上传</label>
@@ -46,15 +42,6 @@
   </div>
 </template>
 <style scoped>
-  .mask {
-    position: fixed;
-    top: 48px;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background: rgba(240, 240, 240, 0.6);
-  }
-
   .files-area {
     height: 100px;
     padding: .5em .6em;
@@ -119,7 +106,7 @@
       if (!this.logedIn) return
       this.getInfo()
     },
-    props: ['logedIn'],
+    props: ['logedIn', 'token'],
     data () {
       return {
         signUpInfo: null,
@@ -132,9 +119,7 @@
           opinion: ''
         },
         tip: '这些信息可是报名必不可少的',
-        files: [],
-        loading: false,
-        error: false
+        files: []
       }
     },
     components: {
@@ -159,7 +144,7 @@
           var self = this
           self.$dispatch('loading')
           self
-            .$http.post('https://mscinxdu.leanapp.cn/join/set-sign-up-info', self.model)
+            .$http.post('http://localhost:8081/join/set-sign-up-info', {data: self.model, token: this.token})
             .then(function (resp) {
               if (resp.status >= 200 && resp.status < 300) {
                 var result = resp.json()
@@ -183,6 +168,9 @@
       },
       'delete-file': function (file) {
         this.files.$remove(file)
+      },
+      'get-info': function () {
+        this.getInfo()
       }
     },
     methods: {
@@ -196,9 +184,10 @@
         var input = e.target
         if (input.files.length < 1) return
         var form = new FormData()
-        form.set('file', input.files[0])
+        form.append('file', input.files.item(0))
+        form.append('token', this.token)
         var xhrWrap = {xhr: null}
-        var req = this.$http.post('https://mscinxdu.leanapp.cn/join/file', form, {
+        var req = this.$http.post('http://localhost:8081/join/file', form, {
           before (req) {
             xhrWrap.xhr = req
           }
@@ -207,9 +196,11 @@
       },
       getInfo: function () {
         var self = this
-        self.error = false
-        self.loading = true
-        this.$http.get('https://mscinxdu.leanapp.cn/join/sign-up-info')
+        self.$dispatch('info-status', {
+          loading: true,
+          error: false
+        })
+        this.$http.post('http://localhost:8081/join/sign-up-info', {token: this.token})
           .then(function (resp) {
             if (resp.status >= 200 && resp.status < 300) {
               var result = resp.json()
@@ -218,15 +209,27 @@
                 self.files = result.files
                 delete result.files
                 self.model = result
-                self.loading = false
+                self.$dispatch('info-status', {
+                  loading: false,
+                  error: false
+                })
               } else {
-                self.error = true
+                self.$dispatch('info-status', {
+                  loading: true,
+                  error: true
+                })
               }
             } else {
-              self.error = true
+              self.$dispatch('info-status', {
+                loading: true,
+                error: true
+              })
             }
           }, function () {
-            self.error = true
+            self.$dispatch('info-status', {
+              loading: true,
+              error: true
+            })
           })
       }
     }

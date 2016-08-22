@@ -63,7 +63,7 @@
         tip: '上传中'
       }
     },
-    props: ['file'],
+    props: ['file', 'token'],
     components: {},
     methods: {
       errorHandler: function (self) {
@@ -79,7 +79,7 @@
         } else {
           var self = this
           self.$http
-            .post('https://mscinxdu.leanapp.cn/join/delete-file', {id: this.id})
+            .post('http://localhost:8081/join/delete-file', {id: this.id, token: this.token})
             .then(function (resp) {
               if (resp.status >= 200 && resp.status < 300) {
                 var result = resp.json()

@@ -3,7 +3,7 @@
     <nav-header></nav-header>
     <router-view
       class="animated"
-      transition="switch"
+      transition="fade"
       transition-mode="out-in">
     </router-view>
   </div>
@@ -21,9 +21,17 @@
 
 <style>
   p {
-    font-family: 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, 'Hiragino Sans GB', sans-serif;
+    font-family: 'STHeiti', Arial, 'Liberation Sans', FreeSans, 'Hiragino Sans GB', sans-serif;
   }
 
+  @font-face {
+    font-family: 'MSC';
+    src: url(https://oc7r9dv0c.qnssl.com/static/fonts/msc-font.woff);
+  }
+
+  .msc {
+    font-family: 'MSC' !important;
+  }
   .animated {
     -webkit-animation-duration: 500ms;
     animation-duration: 500ms;
