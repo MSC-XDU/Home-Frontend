@@ -29,7 +29,7 @@
           </div>
           <div class="pure-u-2-3 pure-u-sm-1-2">
             <label for="birthday">生日</label>
-            <input v-model="model.birthday" v-form-ctrl required name="birthday" pattern="^\d{4}-\d{2}-\d{2}$"
+            <input v-model="model.birthday" v-form-ctrl required name="birthday"
                    id="birthday" type="date" placeholder="1970-01-01">
           </div>
           <div class="pure-u-1-1 pure-u-sm-1-4">

@@ -16,9 +16,9 @@
         <input @input="codeInput" @paste="codePaste" @keydown="codeKeyDown" class="char-filed" maxlength="1"
                data-index="5">
       </div>
-      <p v-show="remain > 0">{{remain}} 秒后重新请求验证码</p>
-      <button v-show="remain <= 0" class="pure-button" style="margin-top: 15px" @click="requestCode">{{codeTip}}
-      </button>
+      <p v-show="remain > 0 && count <= 2">{{remain}} 秒后重新请求验证码</p>
+      <button v-show="count >= 1 && remain <= 0" class="pure-button" style="margin-top: 15px" @click="skip">收不到验证码?点这里跳过</button>
+      <button v-show="remain <= 0 && count <= 2" class="pure-button" style="margin-top: 15px" @click="requestCode">{{codeTip}}</button>
       <div class="code-tips">
         <h4 class="code-tip">{{tip}}</h4>
       </div>
@@ -62,7 +62,8 @@
         codeInputs: [],
         tip: '',
         remain: 60,
-        codeTip: '获取验证码'
+        codeTip: '获取验证码',
+        count: 0
       }
     },
     props: {
@@ -75,6 +76,12 @@
     },
     components: {},
     methods: {
+      skip: function () {
+        this.$dispatch('next', {
+          next: 'sign-up-info',
+          color: 'red'
+        })
+      },
       codeInput: function (e) {
         var index = parseInt(e.target.dataset.index)
         var inputValue = e.target.value
@@ -160,6 +167,8 @@
       startCountDown: function () {
         var self = this
         self.remain = 60
+        if (this.count > 2) return
+        this.count += 1
         var count = setInterval(function () {
           if (self.remain > 0) {
             self.remain -= 1
